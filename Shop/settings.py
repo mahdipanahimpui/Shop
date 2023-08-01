@@ -123,3 +123,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# notify the django from new User model
+# AUTH_USER_MODEL = "myapp.MyUserModel" # dont use module name
+AUTH_USER_MODEL = "accounts.User"
+

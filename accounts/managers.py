@@ -7,7 +7,7 @@ class UserManager(BaseUserManager):
     def create_user(self, phone_number, email, full_name, password):
 
     # the field is come by order USERNAME_FIELD, REQUIRED FIELD AND PASSWORD
-        self.validate(self, phone_number, email, full_name, password)
+        self.validate(phone_number, email, full_name, password)
 
         user = self.model(
             phone_number = phone_number,
