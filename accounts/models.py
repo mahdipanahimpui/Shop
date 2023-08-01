@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from . managers import UserManager
 
 
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
     phone_number = models.CharField(max_length=11, unique=True)
-    full_name = models.CharField()
+    full_name = models.CharField(max_length=100)
     # is active is overrided
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=True)
@@ -15,7 +16,9 @@ class User(AbstractBaseUser):
     # REQUIRED_FIELDS is just to use cratesuperuser in command, not other places,
     # phone_number is required because is default auth field,
     # password is required because is implemented in AbstractBaseUer
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['email', 'full_name']
+
+    objects = UserManager()
 
 
     def __str__(self):
