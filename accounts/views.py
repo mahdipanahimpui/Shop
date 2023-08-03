@@ -20,9 +20,10 @@ class UserRegistrationView(View):
         if form.is_valid():
             cd = form.cleaned_data
 
-            if User.objects.filter(email=cd['email']).exists() or User.objects.filter(phone_number=cd['phone_number']).exists():
-                messages.error(requeset, 'phone number or email is used before,', 'warning')
-                return render(requeset, self.template_name, {'form': form})
+            # handle it by clean_fields in forms
+            # if User.objects.filter(email=cd['email']).exists() or User.objects.filter(phone_number=cd['phone_number']).exists():
+            #     messages.error(requeset, 'phone number or email is used before,', 'warning')
+            #     return render(requeset, self.template_name, {'form': form})
 
             random_code = random.randint(10000, 99999)
             send_otp_code(phone_number=cd['phone_number'], code=random_code)
@@ -41,7 +42,8 @@ class UserRegistrationView(View):
             messages.success(requeset, 'a code sent you', 'success')
             return redirect('accounts:verify_code')
         
-        return redirect('home:home')
+        return render(requeset, self.template_name, {'form': form})
+
     
 
 class UserRegistrationVerifyCodeView(View):
