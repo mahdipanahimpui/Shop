@@ -4,7 +4,7 @@ from . forms import UserRegistrationForm, VerifyCodeForm
 from .models import OtpCode, User
 from django.contrib import messages
 import random
-from utils import send_otp_code
+from utils import send_otp_code, check_code_expire
 
 class UserRegistrationView(View):
     form_class = UserRegistrationForm
@@ -74,21 +74,26 @@ class UserRegistrationVerifyCodeView(View):
         if form.is_valid():
 
             cd = form.cleaned_data
-            if any(cd['code'] == code_instance.code for code_instance in code_instances):
-                User.objects.create_user(
-                    phone_number=user_session['phone_number'],
-                    email=user_session['email'],
-                    full_name=user_session['full_name'],
-                    password=user_session['password']
-                )
-                code_instances.delete()
+            for code_instance in code_instances:
+                if cd['code'] == code_instance.code:
+                    if not check_code_expire(code_instance.created, minutes=2, error_callback=lambda : messages.error(request, 'code has been expired', 'warning')):
+                        return redirect('accounts:verify_code')
+                
+                    User.objects.create_user(
+                        phone_number=user_session['phone_number'],
+                        email=user_session['email'],
+                        full_name=user_session['full_name'],
+                        password=user_session['password']
+                    )
+                    code_instances.delete()
 
-                messages.success(request, 'user registered', 'info')
-                return redirect('home:home')
+                    messages.success(request, 'user registered', 'info')
+                    return redirect('home:home')
             
-            else:
-                messages.error(request, 'code not match', 'danger')
-                return redirect('accounts:verify_code')
+                else:
+                    messages.error(request, 'code not match', 'danger')
+                    return redirect('accounts:verify_code')
+
             
         return redirect('home:home')
         
