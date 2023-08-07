@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'home.apps.HomeConfig',
+    'storages',
+
 ]
 
 MIDDLEWARE = [
@@ -131,10 +133,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-
-
-
-
 # to use media file:
 MEDIA_URL = '/media/'  # read from root of app in media file (to get media)
 MEDIA_ROOT = BASE_DIR / 'media' # when you upload a media, a media dir create, and store the media there
@@ -146,4 +144,31 @@ MEDIA_ROOT = BASE_DIR / 'media' # when you upload a media, a media dir create, a
 # notify the django from new User model
 # AUTH_USER_MODEL = "myapp.MyUserModel" # dont use module name
 AUTH_USER_MODEL = "accounts.User"
+
+
+
+#****************************************
+#** to connect to CDN for media files ***
+#****************************************
+
+# it saves the media file in CDN not in /media/
+
+# 2 way to connect cnd, 1)automatically 2)manually
+
+# pip install django-storages
+# pip install boto3
+# add 'storages' in installed app in setting.py
+
+# required
+#automatically
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = '01546184-771b-4f0e-b4c8-2dac8f08b385'
+AWS_SECRET_ACCESS_KEY = '163d2838947ca0dc0db044e27e6cce0f0c94eeb71f618f6b1437a0b3a602748b'
+AWS_S3_ENDPOINT_URL = 'https://s3.ir-thr-at1.arvanstorage.ir'
+AWS_STORAGE_BUCKET_NAME = 'django-shop-train'
+# optinal
+AWS_SERVICE_NAME = 's3'# required for manully mode
+AWS_S3_FILE_OVERWRITE = False   # overwrite the same name files
+
+
 
