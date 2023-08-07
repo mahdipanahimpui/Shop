@@ -153,7 +153,7 @@ AUTH_USER_MODEL = "accounts.User"
 
 # it saves the media file in CDN not in /media/
 
-# 2 way to connect cnd, 1)automatically 2)manually
+# 2 way to connect cnd, 1)automatically 2)manually(using celery)
 
 # pip install django-storages
 # pip install boto3
