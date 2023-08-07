@@ -129,6 +129,20 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+
+
+
+
+# to use media file:
+MEDIA_URL = '/media/'  # read from root of app in media file
+MEDIA_ROOT = BASE_DIR / 'media' # when you upload a media, a media dir create, and store the media there
+
+
+
+
+
 # notify the django from new User model
 # AUTH_USER_MODEL = "myapp.MyUserModel" # dont use module name
 AUTH_USER_MODEL = "accounts.User"
