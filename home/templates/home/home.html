@@ -5,6 +5,15 @@
     <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
 {% endblock extra_headers %}
 
+
 {% block content %}
-    <h3>Hello User</h3>
+    {% for product in products %}
+        <div class="card" style="width: 18rem;">
+            <!-- to use media file in debug mode add a code in main urls.py -->
+            <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}"> <!-- url is important after porduct.image.url -->
+            <div class="card-body">
+            <a class="card-title" href="{{ product.get_absolute_url }}" >{{ product.name }}</a>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

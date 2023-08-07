@@ -136,7 +136,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # to use media file:
-MEDIA_URL = '/media/'  # read from root of app in media file
+MEDIA_URL = '/media/'  # read from root of app in media file (to get media)
 MEDIA_ROOT = BASE_DIR / 'media' # when you upload a media, a media dir create, and store the media there
 
 
