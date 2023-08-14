@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'home.apps.HomeConfig',
     'storages',
-
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
