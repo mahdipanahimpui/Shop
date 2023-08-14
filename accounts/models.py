@@ -43,7 +43,7 @@ class User(AbstractBaseUser):
 
 
 class OtpCode(models.Model):
-    phone_number = models.CharField(max_length=11)
+    phone_number = models.CharField(max_length=11)# use unique=True, just one phone_number for otps
     code = models.PositiveSmallIntegerField()
     created = models.DateTimeField(auto_now=True)
 

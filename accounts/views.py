@@ -91,6 +91,7 @@ class UserRegistrationVerifyCodeView(View):
                     code_instances.delete()
 
                     messages.success(request, 'user registered', 'info')
+                    OtpCode.objects.filter(phone_number=user_session['phone_number']).delete()
                     return redirect('home:home')
             
                 else:

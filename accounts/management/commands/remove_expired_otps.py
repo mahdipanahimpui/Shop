@@ -11,6 +11,7 @@
 from django.core.management.base import BaseCommand
 from accounts.models import OtpCode
 from datetime import datetime, timedelta
+import pytz # pip install pytz
 
 
 # class name should be <Command> 
@@ -19,10 +20,14 @@ class Command(BaseCommand):
 
     # overwride the handle def
     def handle(self, *args, **kwargs):
-        expired_time = datetime.now() - timedelta(minutes=2)
+        expired_time = datetime.now(tz=pytz.timezone('Asia/Tehran')) - timedelta(minutes=2)
         OtpCode.objects.filter(created__lt=expired_time).delete()
 
         self.stdout.write('all expired otp code removed.')
+
+
+
+## use <python manage.py remove_expired_otps> to run the commands
 
 
 

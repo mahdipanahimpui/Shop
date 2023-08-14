@@ -109,11 +109,16 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# set the timezone, recommended
+TIME_ZONE = 'Asia/Tehran'
+## setting the TIME_ZONE is not enough, use pytz in datetimes in code
 
 USE_I18N = True
 
+
+# if USE_TZ is False, django use the system timezone, not recommended
 USE_TZ = True
+
 
 
 # Static files (CSS, JavaScript, Images)
