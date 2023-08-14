@@ -3,6 +3,7 @@ from django.views import View
 from .models import Product
 from . import tasks
 from django.contrib import messages
+from utils import IsAdminUserMixin
 
 class HomeView(View):
     template_name = 'home/home.html'
@@ -24,15 +25,16 @@ class ProductDetailView(View):
 
 
 
-class BucketHome(View):
+class BucketHome(IsAdminUserMixin, View):
     template_name = 'home/bucket.html'
 
-    # dispatch method runs befor all methods in class
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_admin:
-            return redirect('home:home')
-        # return super is required if code is continued
-        return super().dispatch(request, *args, **kwargs)
+    # # dispatch method runs befor all methods in class
+    # def dispatch(self, request, *args, **kwargs):
+    #     if not request.user.is_admin:
+    #         return redirect('home:home')
+    #     # return super is required if code is continued
+    #     return super().dispatch(request, *args, **kwargs)
+    # *** dispatch is not required by overwriting the UserPassesTestMixin in utils.py *****
 
     def get(self, request):
         objects = tasks.all_bucket_objects_task() # is it is asynck use .dealy() or apply_async
@@ -40,7 +42,7 @@ class BucketHome(View):
         return render(request, self.template_name, {'objects': objects})
     
 
-class DeleteObjectFromBucketView(View):
+class DeleteObjectFromBucketView(IsAdminUserMixin, View):
     
     def get(self, request, key):
         delete_result = tasks.delete_object_task.delay(key) # run rabbitmq and run the celery -A Shop worker -l info  in env
@@ -50,9 +52,8 @@ class DeleteObjectFromBucketView(View):
     
 
 
-class DownloadObjectFromBucketView(View):
+class DownloadObjectFromBucketView(IsAdminUserMixin, View):
 
-    
     def get(self,request, key):
         tasks.download_object_task.delay(key)
         messages.success(request, 'download will stating soon', 'info')

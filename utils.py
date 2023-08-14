@@ -29,6 +29,7 @@
 
 from kavenegar import *
 from datetime import datetime, timedelta, timezone
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 
 def send_otp_code(phone_number, code):
@@ -66,3 +67,7 @@ def check_code_expire(code_time, minutes=2, success_callback=None, error_callbac
         return False
         
         
+
+class IsAdminUserMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_admin
