@@ -170,5 +170,7 @@ AWS_STORAGE_BUCKET_NAME = 'django-shop-train'
 AWS_SERVICE_NAME = 's3'# required for manully mode
 AWS_S3_FILE_OVERWRITE = False   # overwrite the same name files
 
+AWS_LOCAL_STORAGE = f'{BASE_DIR}/aws/' # where to download files
+
 
 

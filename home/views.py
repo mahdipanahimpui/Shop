@@ -47,3 +47,13 @@ class DeleteObjectFromBucketView(View):
         messages.success(request, 'your object will delete soon ...', 'info')
         delete_result.get() # app wait until the result getting, it is not required
         return redirect('home:bucket')
+    
+
+
+class DownloadObjectFromBucketView(View):
+
+    
+    def get(self,request, key):
+        tasks.download_object_task.delay(key)
+        messages.success(request, 'download will stating soon', 'info')
+        return redirect('home:bucket')

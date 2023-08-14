@@ -1,5 +1,7 @@
 import boto3
 from django.conf import settings
+import os
+
 
 
 class Bucket:
@@ -35,6 +37,19 @@ class Bucket:
     def deltete_object(self, key):
         self.connection.delete_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=key)
         return True # it is require to return True in not returned def, python return None automatically
+    
+
+    def download_object(self, key):
+        path = os.path.join(settings.AWS_LOCAL_STORAGE, key)
+        dir = os.path.dirname(path)
+        file_name = os.path.basename(path)
+
+        # Create directories if they don't exist
+        os.makedirs(dir, exist_ok=True)
+
+        # AWS_LOCAL_STORAGE used where to download
+        with open(path , 'wb') as f:
+            self.connection.download_fileobj(settings.AWS_STORAGE_BUCKET_NAME, key, f)
 
 
 bucket = Bucket()
