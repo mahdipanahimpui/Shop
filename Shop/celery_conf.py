@@ -12,7 +12,7 @@ celery_app = Celery('Shop') # should be project name
 celery_app.autodiscover_tasks() # discover task in all apps (finds the tasks.py)
 
 
-celery_app.conf.broker_url = 'amqp://rabbitmq'
+celery_app.conf.broker_url = "amqp://guest:guest@localhost:5672"
 celery_app.conf.result_backend = 'rpc://'
 celery_app.conf.task_serializer = 'json'
 celery_app.conf.result_serializer = 'pickle'

@@ -32,5 +32,9 @@ class Bucket:
         return None
     
 
+    def deltete_object(self, key):
+        self.connection.delete_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=key)
+        return True # it is require to return True in not returned def, python return None automatically
+
 
 bucket = Bucket()

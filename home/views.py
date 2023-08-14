@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import Product
-from . tasks import all_bucket_objects_task
+from . import tasks
+from django.contrib import messages
 
 class HomeView(View):
     template_name = 'home/home.html'
@@ -34,6 +35,15 @@ class BucketHome(View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        objects = all_bucket_objects_task() # is it is asynck use .dealy() or apply_async
+        objects = tasks.all_bucket_objects_task() # is it is asynck use .dealy() or apply_async
 
         return render(request, self.template_name, {'objects': objects})
+    
+
+class DeleteObjectFromBucketView(View):
+    
+    def get(self, request, key):
+        delete_result = tasks.delete_object_task.delay(key) # run rabbitmq and run the celery -A Shop worker -l info  in env
+        messages.success(request, 'your object will delete soon ...', 'info')
+        delete_result.get() # app wait until the result getting, it is not required
+        return redirect('home:bucket')
