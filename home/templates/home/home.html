@@ -9,7 +9,20 @@
 {% block content %}
 
     {% for category in categories %}
-        <a href="{{ category.get_absolute_url }}" class="btn">{{ category.name }}</a>
+        <!-- Example split danger button -->
+        <div class="btn-group">
+            <a class="btn btn-info" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+            <button type="btn btn-info" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only"></span>
+            </button>
+            <div class="dropdown-menu">
+            {% for sub in category.sub_categories.all %}
+                <a class="dropdown-item" href="{{ sub.get_absolute_url }}">{{ sub.name }}</a>
+            {% endfor %}
+
+            </div>
+        </div>
+
     {% endfor %}
 
     <br><br>

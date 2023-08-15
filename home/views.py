@@ -10,10 +10,10 @@ class HomeView(View):
 
     def get(self, request, *args, **kwargs):
         products = Product.objects.filter(available=True)
-        categories = Category.objects.all()
+        categories = Category.objects.filter(is_sub_category=False)
 
         if kwargs.get('category_slug'):
-            category = categories.get(slug=kwargs['category_slug'])
+            category = Category.objects.get(slug=kwargs['category_slug'])
             products = products.filter(category=category)
         return render(request, self.template_name, {'products': products, 'categories': categories})
         
