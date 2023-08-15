@@ -14,7 +14,7 @@
     <p>{{ product.description }}</p>
     <br><br>
 
-    <form action="{% url 'orders:cart_add' product.id %}" method="post" novalidate>
+    <form action="{% url 'orders:cart_item_add' product.id %}" method="post" novalidate>
         {% csrf_token %}
         {{ form}}
         <input value="add" type="submit">

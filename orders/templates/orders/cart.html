@@ -21,8 +21,21 @@
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.price }}</td>
                     <td>{{ item.total_price }}</td>
+                    <td><a href="{% url 'orders:cart_item_remove' item.product_id %}">Remove</a></td>
                 </tr>
             {% endfor %}
+            
+            {% if cart.is_epmty %}
+                <p class="text-center">cart is empty</p>
+            {% else %}
+                <tr>
+                    <td>Total</td>
+                    <td colspan="3"></td>
+                    <td>{{ cart.total_price }}</td>
+                    <td colspan="1"></td>
+                </tr>
+            {% endif %}
+
         </tbody>
     </table>
 {% endblock content %}

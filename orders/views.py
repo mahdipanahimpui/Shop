@@ -17,6 +17,8 @@ class CartView(View):
 
 class CartAddView(View):
     from_class = CartAddForm
+    template_name = 'home/detail.html'
+
 
     def get(self, request):
         pass
@@ -27,6 +29,16 @@ class CartAddView(View):
         form = CartAddForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            cart.add(product, cd['quantitiy'])
+            cart.add(product, cd['quantity'])
+            return redirect('orders:cart')
+    
+        return render(request, self.template_name, {'product': product, 'form': form})
+    
 
+class CartItemRemoveView(View):
+
+    def get(self, request, product_id):
+        cart = Cart(request)
+        cart.cart_item_remvoe(product_id)
         return redirect('orders:cart')
+
