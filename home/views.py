@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from .models import Product
+from .models import Product, Category
 from . import tasks
 from django.contrib import messages
 from utils import IsAdminUserMixin
@@ -8,9 +8,14 @@ from utils import IsAdminUserMixin
 class HomeView(View):
     template_name = 'home/home.html'
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         products = Product.objects.filter(available=True)
-        return render(request, self.template_name, {'products': products})
+        categories = Category.objects.all()
+
+        if kwargs.get('category_slug'):
+            category = categories.get(slug=kwargs['category_slug'])
+            products = products.filter(category=category)
+        return render(request, self.template_name, {'products': products, 'categories': categories})
         
         
 
@@ -20,7 +25,7 @@ class ProductDetailView(View):
     def get(self, request, slug):
         product = get_object_or_404(Product, slug=slug)
         return render(request, self.template_name, {'product': product})
-
+ 
 
 
 

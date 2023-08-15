@@ -7,10 +7,17 @@
 
 
 {% block content %}
+
+    {% for category in categories %}
+        <a href="{{ category.get_absolute_url }}" class="btn">{{ category.name }}</a>
+    {% endfor %}
+
+    <br><br>
+
     {% for product in products %}
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem; display:inline-block;">
             <!-- to use media file in debug mode add a code in main urls.py -->
-            <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}"> <!-- url is important after porduct.image.url -->
+            <img class="card-img-top product-img" src="{{ product.image.url }}" alt="{{ product.name }}"> <!-- url is important after porduct.image.url -->
             <div class="card-body">
             <a class="card-title" href="{{ product.get_absolute_url }}" >{{ product.name }}</a>
             </div>

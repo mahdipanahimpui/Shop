@@ -5,6 +5,9 @@ class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
 
+    def get_absolute_url(self):
+        return reverse('home:category_filter', args=[self.slug])
+
     class Meta:
         ordering = ('name',)
         verbose_name = 'Category' # the model name used in admin panel
