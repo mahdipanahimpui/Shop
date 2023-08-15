@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import Product, Category
+from orders.forms import CartAddForm
 from . import tasks
 from django.contrib import messages
 from utils import IsAdminUserMixin
@@ -21,10 +22,12 @@ class HomeView(View):
 
 class ProductDetailView(View):
     template_name = 'home/detail.html'
+    form_class = CartAddForm
 
     def get(self, request, slug):
+        form = self.form_class
         product = get_object_or_404(Product, slug=slug)
-        return render(request, self.template_name, {'product': product})
+        return render(request, self.template_name, {'product': product, 'fomr': form})
  
 
 
