@@ -1,0 +1,32 @@
+1. install supervisor
+        sudo apt-get install supervisor
+
+2. all supervisor processes goes here
+        /etc/supervisor/conf.d
+
+3. create project's celery configuration file for supervisor
+        touch /etc/supervisor/conf.d/project_name.conf
+
+4. write supervisor configuration:
+        nano /etc/supervisor/conf.d/project_name.conf
+
+        [program:django-shop]
+        uesr=mahdi
+        environment=C_FORCE_ROOT="yes"
+        directory = /home/mahdi/Documents/django_course/shop/Shop/
+        command=/home/mahdi/Documents/django_course/shop/env/bin/celery	-A Shop	worker -l INFO
+        numprocs=1
+        autostart=True
+        autorestart=True
+        sdtout_logfi
+
+5. create log files
+        touch /var/log/myproject/celery_out.log
+        touch /var/log/myproject/celery_err.log
+
+6. update supervisor configuration
+        supervisorctl reread
+        supervisorctl update
+
+7. done
+        supervisorctl {status|start|stop|restart} project_name
