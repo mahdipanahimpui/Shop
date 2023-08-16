@@ -107,6 +107,20 @@ DATABASES = {
 # }
 
 
+#### using cache 
+## it is used instaed server in session, (by default saved in db in server and a hashcode in client)
+# install redis package in linux
+# pip install redis
+# pip install hiredis
+
+#  
+# cache_db saves in db too,
+# in reading first, try to read from cache then db
+
+
+
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
