@@ -90,6 +90,23 @@ DATABASES = {
     }
 }
 
+#### to use other database ####
+
+# install postgresql
+# pip install psycopg2 or psycopg2-binary
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME':  'name',
+#         'USER': 'username',
+#         'PASSWORD': 'password',
+#         'HOST': '1270.0.1',
+#         'PORT': '5432'
+#     }
+# }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

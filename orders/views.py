@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import Order, OrderItem
 from django.views import View
 from .cart import Cart
@@ -28,7 +28,12 @@ class CartView(View):
     
 
 
-class CartAddView(View):
+# PermissionRequiredMixin used to check permissions by permission_required
+class CartAddView(PermissionRequiredMixin, View):
+    # permission naming: app_name.perm.modelname(small)
+    permission_required = 'orders.add_order'
+
+
     from_class = CartAddForm
     template_name = 'home/detail.html'
 

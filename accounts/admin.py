@@ -38,6 +38,17 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('email', 'full_name')
     filter_horizontal = ('groups', 'user_permissions') # for permisions,
 
+    # make readonly some fields
+    readonly_fields = ('last_login',)
+
+
+    # for limitation to show fields in admin panel overwride the get_form
+    # limit the superuser field 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+        if not request.user.is_superuser:
+            form.base_fields['is_superuser'].disabled = True
+        return form
 
 
 
