@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # Third Party Apps
     'storages',
     'django_celery_beat',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
@@ -216,3 +217,10 @@ AWS_LOCAL_STORAGE = f'{BASE_DIR}/aws/' # where to download files
 
 
 
+
+
+CCKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Basic',
+    },
+}

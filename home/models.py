@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from ckeditor.fields import RichTextField
 
 class Category(models.Model):
     is_sub_category = models.BooleanField(default=False)
@@ -27,7 +28,19 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/%Y/%m/%d/') # error in removing obj from buckets
     # image = models.ImageField() 
     # needs to pip install pillow
-    description = models.TextField()
+
+    # description = models.TextField()
+
+    ## How use ckeditor:
+    # pip install django-ckeditor
+    # add 'ckeditor' in isntalled app in settings.py
+    # add | safe in templates
+    # to modify add CKEDITOR_CONFIGS in settings.py
+    description = RichTextField()
+
+
+
+
     # price = models.DecimalField(max_digits=4, decimal_places=2) # 1234.12
     price = models.IntegerField()
     available = models.BooleanField(default=True)
