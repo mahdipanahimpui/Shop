@@ -27,7 +27,7 @@ class UserAdmin(BaseUserAdmin):
 
     fieldsets = (
         (None, {'fields': ('email', 'phone_number', 'full_name', 'password')}),
-        ('Permision', {'fields': ('is_active', 'is_admin', 'last_login')})
+        ('Permision', {'fields': ('is_active', 'is_admin', 'is_superuser', 'user_permissions', 'groups','last_login')})
     ) # is for <form>
 
     add_fieldsets = (
@@ -36,13 +36,12 @@ class UserAdmin(BaseUserAdmin):
 
     ordering = ('is_admin',)
     search_fields = ('email', 'full_name')
-    filter_horizontal = () # for permisions,
+    filter_horizontal = ('groups', 'user_permissions') # for permisions,
 
 
 
 
 # UnRegister the Group Model and Register your specific User Model
-admin.site.unregister(Group)
 admin.site.register(User, UserAdmin)
 
 

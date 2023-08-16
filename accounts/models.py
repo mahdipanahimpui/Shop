@@ -1,9 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from . managers import UserManager
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
+    # to show permissions apply in admin.py
+
     email = models.EmailField(max_length=255, unique=True)
     phone_number = models.CharField(max_length=11, unique=True)
     full_name = models.CharField(max_length=100)
@@ -18,12 +20,17 @@ class User(AbstractBaseUser):
     # password is required because is implemented in AbstractBaseUer
     REQUIRED_FIELDS = ['email', 'full_name']
 
+
+    # is super user is in PermissionsMixin, overwrite that
+
     objects = UserManager()
 
 
     def __str__(self):
         return self.email
     
+    
+    ### to apply django permissions, below codes are comment ###
 
     def has_perm(self, perm, obj=None):
         # user has perm?
@@ -33,6 +40,8 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         # is user has perm to modules?
         return True
+
+
     
     @property
     def is_staff(self):

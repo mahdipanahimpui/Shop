@@ -4,13 +4,15 @@
       {% if request.user.is_authenticated %}
         <a class="navbar-brand" href="{% url 'accounts:user_logout' %}">Logout</a>
         <a class="navbar-brand" href="{% url 'orders:cart' %}">CART {{ cart|length }}</a>
+        <a class="navbar-brand" style="margin-right: 0px;" href="#">{{ request.user.email }}</a>
+
       {% else %}
         <a class="navbar-brand" href="{% url 'accounts:user_login' %}">Login</a>
         <a class="navbar-brand" href="{% url 'accounts:user_register' %}">Register</a>
       {% endif %}
 
       {% if request.user.is_admin %}
-        <a class="navbar-brand" href="{% url 'home:bucket' %}">Bucket</a>
+        <a class="navbar-brand" style="margin-right: 0px;" href="{% url 'home:bucket' %}">Bucket</a>
       {% endif %}
     </div>
   </nav>
