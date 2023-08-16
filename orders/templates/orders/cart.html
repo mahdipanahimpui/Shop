@@ -34,8 +34,12 @@
                     <td>{{ cart.total_price }}</td>
                     <td colspan="1"></td>
                 </tr>
+                <br>
+                <a href="{% url 'orders:orders_create' %}" class="btn btn-primary">Checkout</a>
+
             {% endif %}
 
         </tbody>
     </table>
+
 {% endblock content %}

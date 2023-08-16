@@ -10,6 +10,10 @@ cart_urlpatterns = [
     path('remove/<int:product_id>', views.CartItemRemoveView.as_view(), name='cart_item_remove')
 ]
 
+
+
 urlpatterns = [
-    path('cart/', include(cart_urlpatterns))
+    path('cart/', include(cart_urlpatterns)),
+    path('create/', views.OrderCreateView.as_view(), name='orders_create'),
+    path('detail/<int:order_id>/', views.OrderDetailView.as_view(), name='order_detail')
 ]
