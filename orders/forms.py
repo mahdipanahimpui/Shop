@@ -17,3 +17,9 @@ class CartAddForm(forms.Form):
             print('in if')
             raise ValidationError('limit: 1 to 10')
         return quantity
+    
+
+
+
+class CouponApplyForm(forms.Form):
+    code = forms.CharField()

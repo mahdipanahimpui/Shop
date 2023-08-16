@@ -15,5 +15,8 @@ cart_urlpatterns = [
 urlpatterns = [
     path('cart/', include(cart_urlpatterns)),
     path('create/', views.OrderCreateView.as_view(), name='orders_create'),
-    path('detail/<int:order_id>/', views.OrderDetailView.as_view(), name='order_detail')
+    path('detail/<int:order_id>/', views.OrderDetailView.as_view(), name='order_detail'),
+    path('pay/<int:order_id>', views.OrderPayView.as_view(), name='order_pay'),
+    path('verify/', views.OrederVerifyView.as_view(), name='order_verify'),
+    path('apply_coupon/<int:order_id>', views.CouponApplyView.as_view(), name='apply_coupon')
 ]
